@@ -1,8 +1,17 @@
-const CheckOtpForm = ({ code, setCode, setStep, mobile }) => {
-    const submitHanlder = e => {
-        e.preventDefault()
-        
+import { checkOtp } from "services/auth"
+import {setCookie} from "utils/cookie"
 
+const CheckOtpForm = ({ code, setCode, setStep, mobile }) => {
+    const submitHanlder = async (e) => {
+        e.preventDefault()
+        if (code.length !== 5) return
+
+        const { response, error } = await checkOtp(mobile, code)
+
+        if (response) {
+            setCookie(response.data)
+        }
+        if (error) console.log(error.response.data.message)
     }
     return (
         <form onSubmit={submitHanlder}>
@@ -15,5 +24,4 @@ const CheckOtpForm = ({ code, setCode, setStep, mobile }) => {
         </form>
     )
 }
-
 export default CheckOtpForm
