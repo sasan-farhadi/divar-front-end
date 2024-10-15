@@ -1,0 +1,20 @@
+.sidebar {
+    margin-top: 30px;
+    width: 200px;
+}
+
+.sidebar h4 {
+    border-bottom: 2px solid #a62626;
+}
+
+
+.sidebar li {
+    display: flex;
+    margin: 20px 0;
+}
+
+.sidebar li p {
+    font-weight: 200;
+    margin-right: 10px;
+    color: gray;
+}
