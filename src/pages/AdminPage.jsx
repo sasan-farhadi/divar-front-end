@@ -1,7 +1,11 @@
+import Category from "components/template/Category"
+import CategoryList from "components/template/CategoryList"
+
 const AdminPage = () => {
   return (
     <div>
-      admin
+      <CategoryList />
+      <Category />
     </div>
   )
 }
