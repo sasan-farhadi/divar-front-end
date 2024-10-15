@@ -2,6 +2,9 @@ import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { getCategory } from "services/main"
 import styles from './addPost.module.css'
+import { getCookie } from "utils/cookie"
+import axios from "axios"
+import toast from "react-hot-toast"
 
 const AddPost = () => {
 
@@ -27,7 +30,18 @@ const AddPost = () => {
 
     const addHandler = e => {
         e.preventDefault()
-        console.log(form)
+        const formData = new FormData()
+        for (let x in form) {
+            formData.append(x, form[x])
+        }
+        const token = getCookie("accessToken")
+        axios.post(`${import.meta.env.VITE_BASE_URL}post/create`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `bearer ${token}`
+            }
+        }).then(res => toast.success(res.data.message)).catch(err =>toast.error("مشکلی پیش آمده است"))
+        console.log(formData)
     }
     return (
         <form onChange={changeHandler} className={styles.form}>
@@ -37,7 +51,7 @@ const AddPost = () => {
             <label htmlFor="content">توضیحات</label>
             <textarea name="content" id="content" />
             <label htmlFor="amount">مبلغ</label>
-            <input type="text" name="amount" id="amount" />
+            <input type="number" name="amount" id="amount" />
             <label htmlFor="city">شهر</label>
             <input type="text" name="city" id="city" />
             <label htmlFor="category">دسته بندی</label>
